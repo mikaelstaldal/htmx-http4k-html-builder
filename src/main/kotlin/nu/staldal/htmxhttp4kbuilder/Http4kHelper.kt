@@ -2,7 +2,7 @@ package nu.staldal.htmxhttp4kbuilder
 
 import nu.staldal.kotlin.html.Html
 import nu.staldal.kotlin.html.htmlDoc
-import nu.staldal.kotlin.html.htmlFragment
+import nu.staldal.kotlin.html.partialHtml
 import org.http4k.core.ContentType.Companion.TEXT_HTML
 import org.http4k.core.Response
 import org.http4k.core.Status
@@ -13,6 +13,6 @@ fun htmlPage(status: Status = Status.OK, block: Html.() -> Unit): Response = Res
     .with(Header.CONTENT_TYPE of TEXT_HTML)
     .body(htmlDoc { block() })
 
-fun htmlFrag(status: Status = Status.OK, block: Html.() -> Unit): Response = Response(status)
+fun htmlPartial(status: Status = Status.OK, block: Html.() -> Unit): Response = Response(status)
     .with(Header.CONTENT_TYPE of TEXT_HTML)
-    .body(htmlFragment { block() })
+    .body(partialHtml { block() })

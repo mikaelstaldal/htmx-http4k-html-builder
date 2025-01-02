@@ -43,7 +43,7 @@ fun main() {
         "/click-to-load" bind GET to routes(
             Request.isHtmx bind { request ->
                 val page = pageLens(request)
-                htmlFrag(OK) {
+                htmlPartial(OK) {
                     agentsList(
                         dataStore.agents.drop(10 * page).take(10).toList(),
                         page + 1
@@ -56,7 +56,7 @@ fun main() {
         "/infinite-scroll" bind GET to routes(
             Request.isHtmx bind { request ->
                 val page = pageLens(request)
-                htmlFrag(OK) {
+                htmlPartial(OK) {
                     agentsListInfinite(
                         dataStore.agents.drop(10 * page).take(10).toList(), page + 1
                     )
@@ -76,15 +76,15 @@ fun main() {
         },
 
         "/person" bind GET to {
-            htmlFrag(OK) { viewPerson(dataStore.person) }
+            htmlPartial(OK) { viewPerson(dataStore.person) }
         },
         "/person/edit" bind GET to {
-            htmlFrag(OK) { editPerson(dataStore.person) }
+            htmlPartial(OK) { editPerson(dataStore.person) }
         },
         "/person" bind PUT to { request ->
             dataStore.person = personLens(request)
             println("Person updated: ${dataStore.person}")
-            htmlFrag(OK) { viewPerson(dataStore.person) }
+            htmlPartial(OK) { viewPerson(dataStore.person) }
         },
 
         "/contacts/activate" bind PUT to { request ->
@@ -98,12 +98,12 @@ fun main() {
         "/models" bind GET to { request ->
             val make = makeLens(request)
             dataStore.models[make]?.let {
-                htmlFrag(OK) { options(it) }
+                htmlPartial(OK) { options(it) }
             } ?: Response(NOT_FOUND)
         },
 
         "/modal" bind GET to {
-            htmlFrag(OK) { dialogContent() }
+            htmlPartial(OK) { dialogContent() }
         },
 
         "/todo" bind POST to { request ->
@@ -112,7 +112,7 @@ fun main() {
             val todo = Todo(id, description)
             println("created: $todo")
             dataStore.todos[id] = todo
-            htmlFrag(CREATED) { todoRow(todo) }
+            htmlPartial(CREATED) { todoRow(todo) }
         },
         "/todo/{id}" bind PATCH to { request ->
             val id = idLens(request)
@@ -120,7 +120,7 @@ fun main() {
                 val done = doneLens(request)
                 println("Setting $it to done=$done")
                 it.done = done
-                htmlFrag(OK) { todoRow(it) }
+                htmlPartial(OK) { todoRow(it) }
             } ?: Response(NOT_FOUND)
         },
         "/todo/{id}" bind DELETE to { request ->
@@ -155,7 +155,7 @@ private fun activateOrDeactivateContact(request: Request, activate: Boolean, dat
             } else null
         }
     }.toSet()
-    return htmlFrag(OK) {
+    return htmlPartial(OK) {
         contactsList(
             dataStore.contacts.values.map { it to mutated.contains(it.id) },
             activate

@@ -27,7 +27,9 @@ fun Html.page(subtitle: String, headExtra: Html.() -> Unit = {}, block: Html.() 
                 "href" to "/css/bootstrap.css"
             )
             headExtra()
-            title(mainTitle)
+            title {
+                +mainTitle
+            }
         }
         body {
             div("class" to "container") {
