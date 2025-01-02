@@ -40,7 +40,7 @@ dependencies {
     runtimeOnly("org.slf4j:slf4j-simple:2.0.5")
 
     // Custom dependency
-    implementation("nu.staldal:kotlin-html-builder:0.2.0-SNAPSHOT")
+    implementation("nu.staldal:kotlin-html-builder:0.2.0")
 }
 
 tasks.test {
