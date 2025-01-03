@@ -23,7 +23,7 @@ fun Html.todoList(todoList: Iterable<Todo>) {
                         +"done"
                     }
                     th("scope" to "col") {
-                        unsafeText("&nbsp;")
+                        unsafe("&nbsp;")
                     }
                 }
             }

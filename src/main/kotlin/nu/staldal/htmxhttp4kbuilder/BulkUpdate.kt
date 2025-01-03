@@ -15,8 +15,9 @@ import nu.staldal.kotlin.html.tr
 
 fun Html.bulkUpdate(contacts: Iterable<Contact>) {
     page("Bulk update", {
-        style(
-            """
+        style {
+            unsafe(
+                """
             .htmx-settling tr.deactivate td {
                 background: lightcoral;
             }
@@ -27,7 +28,8 @@ fun Html.bulkUpdate(contacts: Iterable<Contact>) {
               transition: all 1.2s;
             }
             """
-        )
+            )
+        }
     }) {
         div("hx-include" to "#checked-contacts", "hx-target" to "#tbody") {
             button("class" to "btn btn-primary me-1", "hx-put" to "/contacts/activate") {
