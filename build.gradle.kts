@@ -29,15 +29,15 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
     
     // HTTP4k (Core and HTMX modules)
-    implementation(platform("org.http4k:http4k-bom:5.7.3.0")) // BOM
+    implementation(platform("org.http4k:http4k-bom:5.44.0.0"))
     implementation("org.http4k:http4k-core")
     implementation("org.http4k:http4k-htmx")
     
     // Bootstrap (from npm)
-    implementation("org.webjars.npm:bootstrap:5.3.0")
+    implementation("org.webjars.npm:bootstrap:5.3.3")
     
     // SLF4J runtime implementation
-    runtimeOnly("org.slf4j:slf4j-simple:2.0.5")
+    runtimeOnly("org.slf4j:slf4j-simple:2.0.13")
 
     // Custom dependency
     implementation("nu.staldal:kotlin-html-builder:0.3.0")
