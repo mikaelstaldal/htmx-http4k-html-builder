@@ -1,5 +1,6 @@
 package nu.staldal.htmxhttp4kbuilder
 
+import org.http4k.core.HttpHandler
 import org.http4k.core.Method.DELETE
 import org.http4k.core.Method.GET
 import org.http4k.core.Method.PATCH
@@ -27,9 +28,16 @@ import java.util.UUID
 private const val port = 8000
 
 fun main() {
-    val dataStore = DataStore()
+    val app = createApp(DataStore())
+    app.asServer(SunHttp(port)).start()
+    println("Listening on $port")
+}
 
-    val app = routes(
+fun createApp(dataStore: DataStore): HttpHandler = ServerFilters.CatchAll { t ->
+    t.printStackTrace()
+    Response(Status.INTERNAL_SERVER_ERROR)
+}.then(
+    routes(
         "/" bind GET to {
             htmlPage { index() }
         },
@@ -136,13 +144,7 @@ fun main() {
         htmxWebjars(),
         webjar("bootstrap", "5.3.3")
     )
-
-    ServerFilters.CatchAll { t ->
-        t.printStackTrace()
-        Response(Status.INTERNAL_SERVER_ERROR)
-    }.then(app).asServer(SunHttp(port)).start()
-    println("Listening on $port")
-}
+)
 
 private fun activateOrDeactivateContact(request: Request, activate: Boolean, dataStore: DataStore): Response {
     val ids = idsLens(request)
