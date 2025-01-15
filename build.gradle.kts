@@ -29,7 +29,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
     
     // HTTP4k (Core and HTMX modules)
-    implementation(platform("org.http4k:http4k-bom:5.44.0.0"))
+    implementation(platform("org.http4k:http4k-bom:5.44.2.0"))
     implementation("org.http4k:http4k-core")
     implementation("org.http4k:http4k-htmx")
     
@@ -41,6 +41,13 @@ dependencies {
 
     // Custom dependency
     implementation("nu.staldal:kotlin-html-builder:0.4.0")
+
+    // Testing
+    testImplementation(platform("org.junit:junit-bom:5.11.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.http4k:http4k-testing-approval")
+    testImplementation("org.http4k:http4k-testing-hamkrest")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.test {
